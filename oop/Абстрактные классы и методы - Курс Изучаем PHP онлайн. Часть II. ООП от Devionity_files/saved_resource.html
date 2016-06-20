@@ -1,0 +1,900 @@
+
+<!-- saved from url=(0076)https://devionity.com/ide/?p=am3448hbgei6&k=32c5e09631860b4cf30deb08cd2bb347 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+</head>
+<body style="background-color: #f3f3f4; /*background: transparent;*/ height: 100%; width: 100%; padding: 10px;" class=" pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+  <div class="pace-progress-inner"></div>
+</div>
+<div class="pace-activity"></div></div>
+
+
+<link href="./bootstrap.min(1).css" rel="stylesheet">
+<link href="./font-awesome(1).css" rel="stylesheet">
+
+<link href="./animate.css" rel="stylesheet">
+<link href="./style.css" rel="stylesheet">
+<!-- Mainly scripts -->
+<script src="./jquery-2.1.1.js"></script>
+<script src="./bootstrap.min(2).js"></script>
+<script>
+    window.editors = {};
+</script>
+
+
+
+
+<!-- Custom and plugin javascript -->
+<!--<script src="/js/inspinia.js"></script>-->
+<!--<script src="/js/plugins/pace/pace.min.js"></script>-->
+
+
+<!-- CodeMirror -->
+<link href="./codemirror(1).css" rel="stylesheet">
+<link href="./ambiance(1).css" rel="stylesheet">
+<script src="./codemirror(2).js"></script>
+<script src="./javascript(1).js"></script>
+<script src="./xml(1).js"></script>
+<script src="./php.js"></script>
+<script src="./htmlmixed(1).js"></script>
+<link rel="stylesheet" href="./show-hint(1).css">
+<script src="./show-hint(2).js"></script>
+<script src="./xml-hint(1).js"></script>
+<script src="./html-hint(1).js"></script>
+<script src="./php-hint.js"></script>
+<script src="./matchbrackets.js"></script>
+<script src="./javascript(1).js"></script>
+<script src="./css.js"></script>
+<script src="./clike.js"></script>
+
+<link href="./editor.css" rel="stylesheet">
+
+
+<script>
+    function a(){
+        $('.filetab').removeClass('active');
+        $('.code_div').hide();
+    }
+
+    function switchFile(hash){
+        $('.filetab').removeClass('active');
+        $('.code_div').hide();
+
+//        $('.filetab').each(function(){
+//            if ( $(this).attr('hash') != hash ){
+//                $(this).removeClass('active');
+//                $('#code_div_'.$(this).attr('hash')).hide();
+//            }
+//        });
+
+        $('#tab_'+hash).addClass('active');
+        $('#code_div_'+hash).show();
+
+        $('#preview_file').attr('href', 'http://am3448hbgei6.devionity.net/'+$('#tab_'+hash).attr('filepath'));
+    }
+
+    function closeFile(hash){
+
+        $('#tab_'+hash).remove();
+
+//        a = window.editors[hash];
+//        a[0].CodeMirror.toTextArea();
+        $('#code_div_'+hash).remove();
+        if ( $('.filetab').length == 0 ){
+            $('#no_files').show();
+        } else {
+            switchFile($('.filetab').first().attr('hash'));
+            event.stopPropagation();
+        }
+
+    }
+
+    function saveFile(path, code){
+/*<!--        $.ajax({-->
+<!--            url : "http://ide.devionity.com/f.php?s&p=--><?//=$p?><!--&k=--><?//=$k?><!--&f="+path,-->
+<!--            dataType: "text",-->
+<!--            async: false,-->
+<!--            success : function (data) {-->
+<!--                //$('#textarea_'+hash).val(data);-->
+<!--            }-->
+<!--        });--> */
+
+        $.post( "/ide/f.php?s&p=am3448hbgei6&k=32c5e09631860b4cf30deb08cd2bb347&f="+path, { ss: code })
+            .done(function( data ) {
+//                alert( "Data Loaded: " + data );
+            });
+    }
+
+    function openFile(file, path, hash){
+        var tab_id = 'tab_'+hash;
+        if ( $('#'+tab_id).length == 0 ){
+            $('#tabs-panel').append('<div   class="filetab" onclick="switchFile(\''+hash+'\');" hash="'+hash+'" id="'+tab_id+'" filepath="'+path+'">'+file+' <i class="fa fa-close" onclick="closeFile(\''+hash+'\');"></i></div>');
+        } else {
+            switchFile(hash);
+            return 1;
+        }
+
+        $('.filetab').removeClass('active');
+        $('#'+tab_id).addClass('active');
+
+        $('#no_files').hide();
+
+        $('#code_panel').append('<div class="code_div" id="code_div_'+hash+'"><textarea class="lecture-code" style="display: none;" filepath="'+path+'" id="textarea_'+hash+'">'+hash+'</textarea></div>');
+
+        $('#preview_file').attr('href', 'http://am3448hbgei6.devionity.net/'+path);
+
+        $.ajax({
+            url : "/ide/f.php?p=am3448hbgei6&k=32c5e09631860b4cf30deb08cd2bb347&f="+path,
+            dataType: "text",
+            async: false,
+            success : function (data) {
+                $('#textarea_'+hash).val(data);
+            }
+        });
+
+        window.editors[hash] = CodeMirror.fromTextArea(document.getElementById('textarea_'+hash), {
+            lineNumbers: true,
+            matchBrackets: true,
+            styleActiveLine: true,
+        //theme:"ambiance",
+            height: "auto",
+            mode: "application/x-httpd-php",
+            //viewportMargin: "Infinity",
+            extraKeys: {
+                "Ctrl-Space": "autocomplete",
+                "Ctrl-S": function(instance) { instance.save(); saveFile($(instance.getTextArea()).attr('filepath'), $(instance.getTextArea()).val()); },
+                "Alt-Enter": function(instance) { instance.save(); saveFile($(instance.getTextArea()).attr('filepath'), $(instance.getTextArea()).val());document.getElementById("preview_file").click();  },
+                "Ctrl-Enter": function(instance) { instance.save(); saveFile($(instance.getTextArea()).attr('filepath'), $(instance.getTextArea()).val());setTimeout(function(){ document.getElementById("preview_project").click();}, 500); }
+            }
+        });
+
+        switchFile(hash);
+
+    }
+
+    function inIframe () {
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
+    }
+
+    function refreshPreview(){
+        //$('#preview_frame').attr('src', $('#preview_frame').attr('src'));
+        //saveAll();
+        $('#preview_go_btn').click();
+    }
+
+</script>
+
+<div id="ide_header" class="clearfix">
+    <div style="float: left;"><h3><a href="https://devionity.com/projects" target="_blank"><i class="fa fa-cloud"></i> Редактор кода + персональный домен</a></h3>
+        <div><i class="fa fa-info-circle"></i> Это ваш персональный проект (сайт). <a href="https://devionity.com/projects" target="_blank">Узнать больше</a> <br> Ваш домен: <a target="_blank" href="http://am3448hbgei6.devionity.net/">http://am3448hbgei6.devionity.net</a></div>
+    </div>
+
+    <div style="float: left; padding-left: 40px;" id="open_new_window">
+        <!-- <a target="_blank" href="//ide.devionity.com/?p=am3448hbgei6&k=32c5e09631860b4cf30deb08cd2bb347"><button class="btn btn-sm btn-success"><i class="fa fa-external-link"></i> Open IDE in new window</button></a> -->
+<!--        <button class="btn btn-success btn-sm" onclick="saveAll();" style="float: left;"><i class="fa fa-save"></i> Сохранить все</button>&nbsp;-->
+                    <a onclick="saveAll(); setTimeout(function(){return true;}, 2000)" style="float: left; padding-left: 5px;" id="preview_project" href="http://am3448hbgei6.devionity.net/" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa fa-external-link"></i> Результат в новом окне</button></a>
+        
+
+
+
+    </div>
+</div>
+
+<div id="container">
+
+<div class="b-ide_container" style="width: 100% !important;">
+    <div class="project-window">
+        <div class="project-tree">
+            <div class="project-tree-controls">
+                <a class="new-file" title="Новый файл" onclick="createFile();"></a>
+                <a class="new-folder" title="Новая папка" onclick="createFolder();"></a>
+<!--                <a class="upload" title="Upload Files" onclick='uploadFile();'></a>-->
+                <a class="download" title="Скачать проект" target="_blank" href="https://devionity.com/ide/action.php?k=32c5e09631860b4cf30deb08cd2bb347&amp;p=am3448hbgei6&amp;act=download_project"></a> <!-- onclick='downloadProject();' -->
+                <!--a class="fork"></a-->
+<!--                <a class="share" title="Share"></a>-->
+            </div>
+
+            <div id="jstree1" oncontextmenu="return menu(2, event);" class="jstree jstree-1 jstree-default" role="tree" aria-multiselectable="true" tabindex="0" aria-activedescendant="j1_1" aria-busy="false"><ul class="jstree-container-ul jstree-children" role="group"><li role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j1_1_anchor" aria-expanded="true" id="j1_1" class="jstree-node  jstree-open jstree-last"><i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="https://devionity.com/ide/?p=am3448hbgei6&amp;k=32c5e09631860b4cf30deb08cd2bb347#" tabindex="-1" id="j1_1_anchor"><i class="jstree-icon jstree-themeicon fa fa-folder jstree-themeicon-custom" role="presentation"></i>am3448hbgei6                    </a><ul role="group" class="jstree-children"><li role="treeitem" oncontextmenu="return menu(1, event);" onclick="openFile(&quot;index.php&quot;, &quot;index.php&quot;, &quot;828e0013b8f3bc1bb22b4f57172b019d&quot;);" data-filename="index.php" data-jstree="{&quot;type&quot;:&quot;php&quot;}" aria-selected="false" aria-level="2" aria-labelledby="j1_2_anchor" id="j1_2" class="jstree-node js-index-file jstree-leaf jstree-last"><i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="https://devionity.com/ide/?p=am3448hbgei6&amp;k=32c5e09631860b4cf30deb08cd2bb347#" tabindex="-1" id="j1_2_anchor"><i class="jstree-icon jstree-themeicon fa fa-file-code-o jstree-themeicon-custom" role="presentation"></i>index.php</a></li></ul></li></ul></div>
+        </div>
+        <div class="main-editor">
+
+            <div id="tabs-panel" style="float: left;">
+                <!--        <div class="filetab">index.php <i class="fa fa-close"></i></div>-->
+            <div class="filetab active" onclick="switchFile(&#39;828e0013b8f3bc1bb22b4f57172b019d&#39;);" hash="828e0013b8f3bc1bb22b4f57172b019d" id="tab_828e0013b8f3bc1bb22b4f57172b019d" filepath="index.php">index.php <i class="fa fa-close" onclick="closeFile(&#39;828e0013b8f3bc1bb22b4f57172b019d&#39;);"></i></div></div>
+
+
+
+            <div id="code_panel" style="float: left; height: 100%; width: 100%; ">
+                <div id="no_files" style="height: 100%; width: 100%; padding: 10px; display: none; background-color: transparent;">No files opened</div>
+            <div class="code_div" id="code_div_828e0013b8f3bc1bb22b4f57172b019d" style="display: block;"><textarea class="lecture-code" style="display: none;" filepath="index.php" id="textarea_828e0013b8f3bc1bb22b4f57172b019d">828e0013b8f3bc1bb22b4f57172b019d</textarea><div class="CodeMirror cm-s-default"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 6px; left: 34px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -16px; border-right-width: 14px; min-width: 488.625px; min-height: 382px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 17px;">&nbsp;</div></div><div class="CodeMirror-code"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-meta">&lt;?php</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre class=""><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">3</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">abstract</span> <span class="cm-keyword">class</span> <span class="cm-variable">Figure</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">4</div></div><pre class=""><span style="padding-right: 0.1px;">{</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">5</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">abstract</span> <span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">area</span>();</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">6</div></div><pre class=""><span style="padding-right: 0.1px;">}</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">7</div></div><pre class=""><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">8</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-variable">Triangle</span> <span class="cm-keyword">extends</span> <span class="cm-variable">Figure</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">9</div></div><pre class=""><span style="padding-right: 0.1px;">{</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">10</div></div><pre class=""><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">11</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">public</span> <span class="cm-keyword">function</span> <span class="cm-variable">area</span>()</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">12</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>{</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">13</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-comment">// some calculations</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">14</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>}</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">15</div></div><pre class=""><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">16</div></div><pre class=""><span style="padding-right: 0.1px;">}</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">17</div></div><pre class=""><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">18</div></div><pre class=""><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">19</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-variable-2">$t</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">Triangle</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">20</div></div><pre class=""><span style="padding-right: 0.1px;"><span class="cm-comment">// $a = new A; // &lt;b&gt;Fatal error&lt;/b&gt;: Cannot instantiate abstract class A</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">21</div></div><pre class=""><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px; width: 30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">22</div></div><pre class=""><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 14px; width: 1px; top: 382px;"></div><div class="CodeMirror-gutters" style="height: 616px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></div></div>
+
+        </div>
+
+        <div class="clear"></div>
+
+    </div>
+
+
+
+
+
+
+<!--<div style="width: 50%;float: right;clear: right;">-->
+<!---->
+<!--    <iframe style="width: 100%; height: 100%;" src="http://devionity.com"></iframe>-->
+<!--</div>-->
+
+
+<script>
+//    var cm_ = CodeMirror.fromTextArea(document.getElementById('textarea_1'), {
+//        lineNumbers: true,
+//        matchBrackets: true,
+//        styleActiveLine: true,
+////        theme:"ambiance",
+//        height: "auto",
+//        mode: "htmlmixed",
+//        //viewportMargin: "Infinity",
+//        extraKeys: {
+//            "Ctrl-Space": "autocomplete",
+//            "Ctrl-S": function(instance) { alert(instance.getValue()); },
+//            "Alt-Enter": function(instance) { alert(instance.getValue()); },
+//            "Ctrl-Enter": function(instance) { alert(instance.getValue()); }
+//        },
+//        onChange: function(cm) {
+//            alert(cm.getValue());
+//        }
+//    });
+</script>
+
+<!-- Mainly scripts -->
+<script src="./jquery-2.1.1.js"></script>
+<script src="./bootstrap.min(2).js"></script>
+<script src="./jquery.metisMenu.js"></script>
+<script src="./jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="./inspinia.js"></script>
+<script src="./pace.min.js"></script>
+
+<script src="./jstree.min.js"></script>
+
+<link rel="stylesheet" href="./style(1).css">
+
+<style>
+    .jstree-open > .jstree-anchor > .fa-folder:before {
+        content: "\f07c";
+    }
+
+    .jstree-default .jstree-icon.none {
+        width: 0;
+    }
+</style>
+
+<script>
+
+    function saveAll(){
+        $.each( window.editors, function( key, instance ) {
+            instance.save();
+            saveFile($(instance.getTextArea()).attr('filepath'), $(instance.getTextArea()).val());
+        });
+    }
+
+    $(document).ready(function(){
+
+        if ( inIframe() ){
+            $('#open_new_window').show();
+        }
+
+        $('.filetab').click(function(){
+            $('.filetab').css('color', '#fff');
+            $(this).css('color', '000');
+        });
+
+        $('#jstree1').jstree({
+            'core' : {
+                'check_callback' : true
+            },
+            'crrm' : {
+                'move' : {
+                    'check_move' : function (m) {
+                        var p = this._get_parent(m.o);
+                        if(!p) return false;
+                        p = p == -1 ? this.get_container() : p;
+                        if(p === m.np) return true;
+                        if(p[0] && m.np[0] && p[0] === m.np[0]) return true;
+                        return false;
+                    }
+                }
+            },
+            'dnd' : {
+                'drop_finish' : function () {
+                    alert('DROP');
+                },
+                'drag_check' : function (data) {
+                    if(data.r.attr('id') == 'phtml_1') {
+                        return false;
+                    }
+                    return {
+                        after : false,
+                        before : false,
+                        inside : true
+                    };
+                },
+                'drag_finish' : function (data) {
+                    alert('DRAG OK');
+                }
+            },
+            'plugins' : [ 'types',  'crrm' ], //, 'dnd' 'dnd',
+            'types' : {
+                'default' : {
+                    'icon' : 'fa fa-folder'
+                },
+                'htm' : {
+                    'icon' : 'fa fa-file-code-o'
+                },
+                'html' : {
+                    'icon' : 'fa fa-file-code-o'
+                },
+                'htaccess' : {
+                    'icon' : 'fa fa-file-code-o'
+                },
+                'txt' : {
+                    'icon' : 'fa fa-file-code-o'
+                },
+                'php' : {
+                    'icon' : 'fa fa-file-code-o'
+                },
+                'svg' : {
+                    'icon' : 'fa fa-file-picture-o'
+                },
+                'css' : {
+                    'icon' : 'fa fa-file-code-o'
+                },
+                'img' : {
+                    'icon' : 'fa fa-file-image-o'
+                },
+                'js' : {
+                    'icon' : 'fa fa-file-text-o'
+                },
+                'jpg' : {
+                    'icon' : 'fa fa-file-text-o'
+                },
+                'png' : {
+                    'icon' : 'fa fa-file-text-o'
+                }
+
+            }
+        });
+
+
+
+    });
+</script>
+
+<div id="contextMenuId" class="context-menu" style="display: none;"></div>
+
+<div class="b-popup-func js-popup-func" style="display: none;">
+    <a class="b-popup-func__close"></a>
+
+    <div class="b-popup-func__top">
+        Подтвердите действие
+    </div>
+
+    <div class="b-popup-func-content js-popup-func-content"></div>
+
+
+    <!-- ОКНО загрузчика файлов -->
+    <div class="b-popup-func-content js-popup-func-uploads" style="display: none; padding:">
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Select files...</span>
+                <input id="fileupload" type="file" name="files[]" multiple="">
+            </span>
+            <br>
+            <br>
+            <!-- The global progress bar -->
+            <div id="progress" class="progress">
+                <div class="progress-bar progress-bar-success"></div>
+            </div>
+            <!-- The container for the uploaded files -->
+            <div id="files" class="files"></div>
+    </div>
+    <!-- ОКНО загрузчика файлов -->
+
+    <div class="b-popup-func__bottom">
+        <a class="b-popup-func__submit js-popup-func__submit" onclick="applyAction();">Применить</a>
+    </div>
+</div>
+
+<script>
+
+// Find the right method, call on correct element
+function launchIntoFullscreen(element) {
+    if(element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if(element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if(element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if(element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
+}
+
+// Launch fullscreen for browsers that support it!
+//launchIntoFullscreen(document.documentElement); // the whole page
+//launchIntoFullscreen(document.getElementById("videoElement")); // any individual element
+
+
+
+
+
+    // КОНТЕКСТНОЕ МЕНЮ
+
+    // Функция для определения координат указателя мыши
+    function defPosition(event) {
+        var x = y = 0;
+        if (document.attachEvent != null) { // Internet Explorer & Opera
+            x = window.event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+            y = window.event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+        } else if (!document.attachEvent && document.addEventListener) { // Gecko
+            x = event.clientX + window.scrollX;
+            y = event.clientY + window.scrollY;
+        } else {
+            // Do nothing
+        }
+        return {x:x, y:y};
+    }
+
+    function menu(type, evt) {
+        // Блокируем всплывание события contextmenu
+        evt = evt || window.event;
+        evt.cancelBubble = true;
+        // Показываем собственное контекстное меню
+
+        event = event || window.event;
+        var t = event.target || event.srcElement;
+
+        clickId = t.innerText; // Имя файла
+
+        mItem = t.parentElement.parentElement.parentElement.dataset.filename; // Путь файла
+        if ( typeof mItem === 'undefined') { mItem=''; }
+
+        var menu = document.getElementById("contextMenuId");
+        var html = "";
+        switch (type) {
+            case (1) :
+                html = "";
+                html += "<a href='#' class='context-menu-item rename' onclick='renameFile(clickId, mItem);'>Переименовать</a>";
+                html += "<a href='#' class='context-menu-item delete' onclick='deleteFile(clickId, mItem);'>Удалить</a>";
+                html += "<a target='_blank' href='/ide/action.php?k=32c5e09631860b4cf30deb08cd2bb347&p=am3448hbgei6&act=download&filename="+mItem+clickId+"' class='context-menu-item download'>Скачать</a>";
+                break;
+            case (2) :
+                html = "";
+                html += "<a href='#' class='context-menu-item new-file' onclick='createFileInFolder(clickId, mItem);'>Новый файл</a>";
+                html += "<a href='#' class='context-menu-item new-folder' onclick='createFolderInFolder(clickId, mItem);'>Новая папка</a>";
+                //html += "<a href='#' class='context-menu-item' onclick='uploadFileInFolder(clickId, mItem);'>Загрузить файл</a>";
+                html += "<a href='#' class='context-menu-item rename' onclick='renameFolder(clickId, mItem);'>Переименовать</a>";
+                html += "<a href='#' class='context-menu-item delete' onclick='deleteFile(clickId, mItem);'>Удалить</a>";
+                break;
+            default :
+                // Nothing
+                break;
+        }
+        // Если есть что показать - показываем
+        if (html) {
+            menu.innerHTML = html;
+            menu.style.top = defPosition(evt).y + "px";
+            menu.style.left = defPosition(evt).x + "px";
+            menu.style.display = "";
+        }
+        // Блокируем всплывание стандартного браузерного меню
+        return false;
+    }
+
+    $('.b-popup-func__close').click(function(){
+        $('.js-popup-func').hide();
+        $('.js-popup-func-content').show();
+        $('.js-popup-func-uploads').hide();
+    })
+
+    // Функция создания файла
+    function createFile() {
+        $('.b-popup-func__top').html('Создать файл');
+        $('.js-popup-func').show();
+        $('.js-popup-func-content').show();
+        $('.js-popup-func-uploads').hide();
+        $('.js-popup-func-content')
+            .html('<input type="text" placeholder="Введите название" name="new_file_name" /><br/> ')
+            .append('<input type="hidden" value="createFile" name="action_type"  />');
+    }
+
+    // Функция создания файла в папке
+    function createFileInFolder(clickId, mItem) {
+        $('.js-popup-func').show();
+        $('.b-popup-func__top').html('Создать файл');
+        $('.js-popup-func-content').show();
+        $('.js-popup-func-uploads').hide();
+        $('.js-popup-func-content')
+            .html('<input type="text" placeholder="Введите название" name="new_file_name" /><br/> ')
+            .append('<input type="hidden" value="'+clickId+'" name="folder_name"  />')
+            .append('<input type="hidden" value="'+mItem+clickId+'" name="folder_path"  />')
+            .append('<input type="hidden" value="createFileInFolder" name="action_type"  />');
+    }
+
+    // Функция переименовки файла
+    function renameFile(clickId, mItem) {
+        $('.b-popup-func__top').html('Переименовать');
+        $('.js-popup-func').show();
+        $('.js-popup-func-content')
+            .html('<input type="text" value="'+clickId+'" name="new_name" /><br/> ')
+            .append('<input type="hidden" value="'+mItem+'" name="old_path"  />')
+            .append('<input type="hidden" value="'+clickId+'" name="old_name"  />')
+            .append('<input type="hidden" value="renameFile" name="action_type"  />');
+    }
+
+    // Функция переименовки папки
+    function renameFolder(clickId, mItem) {
+        $('.b-popup-func__top').html('Переименовать');
+        $('.js-popup-func').show();
+        $('.js-popup-func-content').show();
+        $('.js-popup-func-uploads').hide();
+        $('.js-popup-func-content')
+            .html('<input type="text" value="'+clickId+'" name="new_name" /><br/> ')
+            .append('<input type="hidden" value="'+mItem+'" name="old_path"  />')
+            .append('<input type="hidden" value="'+clickId+'" name="old_name"  />')
+            .append('<input type="hidden" value="renameFile" name="action_type"  />');
+    }
+
+    // Функция удаления файла
+    function deleteFile(clickId, mItem) {
+
+        $.get("/ide/action.php?k=32c5e09631860b4cf30deb08cd2bb347&p=am3448hbgei6&act=del&filename="+mItem+clickId);
+        window.location.reload();
+
+//        $('.js-popup-func').show();
+//        $('.js-popup-func-content')
+//            .html('Вы точно хотите удалить файл '+clickId+'?<br/> ')
+//            .append('<input type="hidden" value="'+mItem+'" name="delete_path"  />')
+//            .append('<input type="hidden" value="deleteFile" name="action_type"  />');
+    }
+
+    // Функция создания папки
+    function createFolder() {
+
+        $('.js-popup-func').show();
+        $('.js-popup-func-content').show();
+        $('.js-popup-func-uploads').hide();
+        $('.b-popup-func__top').html('Создать папку');
+        $('.js-popup-func-content')
+            .html('<input type="text" placeholder="Введите название папки" name="new_folder_name" /><br/> ')
+            .append('<input type="hidden" value="createFolder" name="action_type"  />');
+    }
+
+    // Функция создания папки в папке
+    function createFolderInFolder(clickId, mItem) {
+        $('.js-popup-func').show();
+        $('.b-popup-func__top').html('Создать папку');
+        $('.js-popup-func-content').show();
+        $('.js-popup-func-uploads').hide();
+        $('.js-popup-func-content')
+            .html('<input type="text" placeholder="Введите название папки" name="new_folder_name" /><br/> ')
+            .append('<input type="hidden" value="'+mItem+clickId+'" name="folder_path"  />')
+            .append('<input type="hidden" value="createFolderInFolder" name="action_type"  />');
+    }
+
+    // Функция загрузки файла
+    function uploadFile() {
+        $('.b-popup-func__top').html('Загрузить файл');
+        $('.js-popup-func').show();
+        $('.js-popup-func-content').hide();
+        $('.js-popup-func-uploads').show();
+        $('.js-popup-func-content')
+            .html('<input id="image-file" name="new_upload_file"  type="file" />')
+            .append('<input type="hidden" value="uploadFile" name="action_type"  />');
+    }
+
+    // Функция загрузки файла
+    function uploadFileInFolder() {
+        $('.b-popup-func__top').html('Загрузить файл');
+        $('.js-popup-func').show();
+        $('.js-popup-func-content').hide();
+        $('.js-popup-func-uploads').show();
+        $('.js-popup-func-content')
+            .html('<input id="image-file" name="new_upload_file"  type="file" />')
+            .append('<input type="hidden" value="'+mItem+clickId+'" name="upload_dir"  />')
+            .append('<input type="hidden" value="uploadFileInFolder" name="action_type"  />');
+    }
+
+    // Функция загрузки файла
+        function downloadProject() {
+            $('.b-popup-func__top').html('Скачать проект');
+            $('.js-popup-func').show();
+            $('.js-popup-func-content').show();
+            $('.js-popup-func-uploads').hide();
+            $('.js-popup-func-content')
+                .html('Скачать проект?')
+                .append('<input type="hidden" value="downloadProject" name="action_type"  />');
+        }
+
+
+    function applyAction() {
+        var action_type = $('[name="action_type"]').val();
+        var dataSend = {};
+
+        switch (action_type) {
+
+            case ('createFile'):
+                var new_file_name = $('[name="new_file_name"]').val();
+                dataSend = {
+                    act: 'add',
+                    filename: new_file_name
+                }
+                break;
+
+            case ('createFileInFolder'):
+                var new_file_name = $('[name="new_file_name"]').val();
+                var folder_path = $('[name="folder_path"]').val();
+                dataSend = {
+                    act: 'add',
+                    filename: folder_path+'/'+new_file_name
+                }
+                break;
+
+            case ('renameFile'):
+                var old_path = $('[name="old_path"]').val();
+                var new_name = $('[name="new_name"]').val();
+                var old_name = $('[name="old_name"]').val();
+                dataSend = {
+                    act: 'rename',
+                    filename_new: old_path+new_name,
+                    filename_old: old_path+old_name
+                }
+                break;
+
+            case ('renameFolder'):
+                var old_path = $('[name="old_path"]').val();
+                var new_name = $('[name="new_name"]').val();
+                var old_name = $('[name="old_name"]').val();
+
+                dataSend = {
+                    act: 'rename_dir',
+                    filename_new: old_path+new_name,
+                    filename_old: old_path+old_name
+                }
+                break;
+
+            /*case ('deleteFile'):
+                var delete_path = $('[name="delete_path"]').val();
+                break;*/
+
+
+            case ('createFolder'):
+                var new_folder_name = $('[name="new_folder_name"]').val();
+
+                dataSend = {
+                    act: 'add_dir',
+                    filename: new_folder_name
+                }
+
+                break;
+
+            case ('createFolderInFolder'):
+                var new_folder_name = $('[name="new_folder_name"]').val();
+                var folder_path = $('[name="folder_path"]').val();
+
+                dataSend = {
+                    act: 'add_dir',
+                    filename: folder_path+'/'+new_folder_name
+                }
+
+                break;
+
+            case ('uploadFile'):
+                var new_upload_file = $('[name="new_upload_file"]').val();
+
+                dataSend = {
+                    act: 'upload',
+                    dir: new_upload_file
+                }
+
+                break;
+
+            case ('uploadFileInFolder'):
+
+                var new_upload_file = $('[name="new_upload_file"]').val();
+                var upload_dir = $('[name="upload_dir"]').val();
+
+                dataSend = {
+                    act: 'upload',
+                    dir: upload_dir + '/' + new_upload_file
+                }
+
+                break;
+
+            case ('downloadProject'):
+                var new_upload_file = $('[name="new_upload_file"]').val();
+                break;
+
+            default:
+                alert('Выберите действие');
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/ide/action.php?k=32c5e09631860b4cf30deb08cd2bb347&p=am3448hbgei6",
+            contentType: "application/javascript; charset=utf-8",
+            dataType: 'json',
+            data: dataSend
+        }).done(function (data) {
+            console.log(data);
+            $('.js-popup-func').hide();
+            $("#jstree1").jstree("refresh");
+
+            saveAll();
+
+            window.location.reload();
+
+        });
+
+
+
+
+    }
+
+    // Закрываем контекстное при клике левой или правой кнопкой по документу
+    // Функция для добавления обработчиков событий
+    function addHandler(object, event, handler, useCapture) {
+        if (object.addEventListener) {
+            object.addEventListener(event, handler, useCapture ? useCapture : false);
+        } else if (object.attachEvent) {
+            object.attachEvent('on' + event, handler);
+        } else alert("Add handler is not supported");
+    }
+    addHandler(document, "contextmenu", function() {
+        document.getElementById("contextMenuId").style.display = "none";
+    });
+    addHandler(document, "click", function() {
+        document.getElementById("contextMenuId").style.display = "none";
+    });
+</script>
+
+
+<!-- UPLOADER -->
+
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<script src="./jquery.ui.widget.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<!-- The basic File Upload plugin -->
+<script src="./jquery.fileupload.js"></script>
+<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+<script src="./bootstrap.min(3).js"></script>
+
+<script>
+
+/*jslint unparam: true */
+/*global window, $ */
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = window.location.hostname === 'blueimp.github.io' ?
+        '//jquery-file-upload.appspot.com/' : 'uploader/server/php/';
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+</script>
+
+<script>
+    $('.js-index-file').click();
+</script>
+
+<!-- UPLOADER -->
+
+</div>
+
+</div>
+
+<script>
+    $("#preview_url_text").keyup(function (e) {
+        if (e.keyCode == 13) {
+            $('#preview_go_btn').click();
+        }
+    });
+</script>
+
+<style>
+    body, html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #container {
+        width: 100%;
+        height: 100%;
+
+    }
+    #b-ide_container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 100px;
+        background: grey;
+    }
+
+    #preview_frame_div {
+        position: absolute;
+        right: 0;
+        top: 85px;
+        bottom: 0;
+        width: 200px;
+        color:#fff;
+        /*border-left: 2px dotted #dedede;*/
+        background: black;
+        -webkit-box-shadow: -4px -4px 2px 0px rgba(214,214,214,1);
+        -moz-box-shadow: -4px -4px 2px 0px rgba(214,214,214,1);
+        box-shadow: -4px -4px 2px 0px rgba(214,214,214,1);
+    }
+    #drag {
+        position: absolute;
+        left: -4px;
+        top: 0;
+        bottom: 0;
+        width: 8px;
+        cursor: w-resize;
+    }
+</style>
+
+<script>
+    var isResizing = false,
+        lastDownX = 0;
+
+    $(function () {
+        var container = $('#container'),
+            left = $('#b-ide_container'),
+            right = $('#preview_frame_div'),
+            handle = $('#drag');
+
+        handle.on('mousedown', function (e) {
+            isResizing = true;
+            lastDownX = e.clientX;
+        });
+
+        $(document).on('mousemove', function (e) {
+            // we don't want to do anything if we aren't resizing.
+            if (!isResizing)
+                return;
+
+            var offsetRight = container.width() - (e.clientX - container.offset().left);
+
+            left.css('right', offsetRight);
+            right.css('width', offsetRight);
+        }).on('mouseup', function (e) {
+            // stop resizing
+            isResizing = false;
+        });
+    });
+</script>
+
+
+</body></html>

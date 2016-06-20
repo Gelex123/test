@@ -1,0 +1,299 @@
+.project-window {
+    /*float: left;
+    clear: left;
+    width: 10%;
+    height: 100%;
+    display: table;
+    float: left;*/
+    padding-left: 250px;
+}
+
+
+.main-editor {
+    margin-left: 0px;
+    background: #2b2b2b;
+    border-left: 1px #555555 solid;
+    position: relative;
+    width: 100%;
+}
+
+.filetab {
+    color: #c9c9c9;
+    font-size: 13px;
+    background: #494539;
+    cursor: pointer;
+    float: left;
+    padding: 3px;
+    border: none;
+    padding-left: 15px;
+    padding-right: 10px;
+    border-right: 1px #292b2d solid;
+}
+
+.filetab.active {
+    color: #c9c9c9;
+    background: #5f5b51;
+    background: linear-gradient(to bottom, #5f5b51, #494539);
+    border: 1px #74726c solid;
+    border-bottom: none;
+}
+
+.filetab.active:first-child {
+    border-left: none;
+}
+
+.filetab.active:last-child {
+    border-right: none;
+}
+
+i.fa-close{
+    cursor: pointer;
+    font-size: 11px;
+}
+
+body{
+    margin: 0px;
+    overflow: hidden;
+    height: 100% !important;
+}
+
+.CodeMirror {
+    background: #2b2b2b;
+    font-size: 12px;
+    height: auto;
+    border-top: 2px #494539 solid!important;
+    width: 100%;
+}
+
+.CodeMirror-linenumbers {
+    background: #313335;
+}
+
+.CodeMirror-linenumber {
+    color: #808080;
+    font-size: 12px;
+}
+
+.CodeMirror span {
+    color: #bababa;
+}
+
+.cm-s-default .cm-meta {
+    color: #e8bf6a;
+}
+
+.cm-s-default .cm-tag {
+    color: #e8bf6a;
+}
+
+.cm-s-default .cm-attribute {
+    color: #bababa;
+}
+
+.cm-s-default .cm-string {
+    color: #a4c157;
+}
+
+.cm-s-default .cm-keyword {
+    color: #cc7832;
+}
+
+.cm-s-default .cm-def {
+    color: #bababa;
+}
+
+.cm-s-default .cm-variable-2 {
+    color: #bababa;
+}
+
+.cm-variable {
+    color: #e8bf6a!important;
+}
+
+.CodeMirror div.CodeMirror-cursor {
+    border-left: 2px solid #bababa;
+}
+
+.CodeMirror-gutters {
+    border-right: 1px dotted #555555;
+    background-color: #313335;
+}
+
+.project-tree {
+    width: 250px;
+    min-width: 250px;
+    overflow-y: visible;
+    overflow-x: auto;
+    font-size: 16px;
+    background: #2b2b2b;
+    padding: 0;
+    float: left;
+    margin-left: -250px;
+}
+
+.jstree-themeicon.fa-folder {
+    color: #bd9662;
+}
+
+.jstree-themeicon.fa-file-code-o {
+    color: #72db67;
+}
+
+.jstree-default {
+    padding-top: 5px;
+    /*overflow-y: scroll;*/
+    height: 100%;
+}
+
+.jstree-default .jstree-anchor {
+    font-size: 13px;
+    color: #bbbbbb!important;
+}
+
+.jstree-default .jstree-clicked, .jstree-default .jstree-hovered {
+    background: none!important;
+}
+
+.project-tree-controls {
+    border-bottom: 1px #494539 solid;
+    border-top: 1px #494539 solid;
+    line-height: 27px;
+    padding: 0 10px;
+    background-color: #383838;
+    height: 27px;
+}
+
+.project-tree-controls a {
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 18px;
+    background-image: url("/css/plugins/jsTree/32px.png");
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.project-tree-controls a.new-file { background-position: -232px -73px; }
+.project-tree-controls a.new-folder { background-position: -267px -8px; }
+.project-tree-controls a.upload { background-position: -170px -74px; }
+.project-tree-controls a.download { background-position: -202px -74px; }
+.project-tree-controls a.fork { background-position: -107px -74px; }
+.project-tree-controls a.share { background-position: -137px -74px; }
+
+.b-popup-func {
+    width: 400px;
+    min-height: 200px;
+    max-height: 300px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -100px;
+    background-color: #383838;
+    color: #fff;
+    border: 1px #494539 solid;
+    z-index: 999;
+}
+
+.b-popup-func-content input {
+    color: #999999;
+}
+
+.b-popup-func__close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: block;
+    width: 11px;
+    height: 11px;
+    background-image: url("../img/popup-close.png");
+}
+
+.b-popup-func__bottom {
+    bottom: 10px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.b-popup-func__top {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px #494539 solid;
+    line-height: 28px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.b-popup-func__submit {
+    display: inline-block;
+    border: 1px #494539 solid;
+    color: #fff;
+    padding: 0 10px;
+    line-height: 28px;
+    background-color: #464646;
+}
+
+.b-popup-func__submit:hover {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #525252;
+}
+
+.b-popup-func__submit:active {
+    background-color: #464646;
+}
+
+.b-popup-func-content {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.b-popup-func input[type=file] {
+    display: inline-block;
+}
+
+/* UPLOADER */
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+}
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+    .fileinput-button input {
+        filter: alpha(opacity=0);
+        font-size: 100%;
+        height: 100%;
+    }
+}
+/* UPLOADER */
+
+.b-ide_container {
+    float: left;
+    clear: left;
+    width: 70% !important;
+    height: 100%;
+    padding-bottom: 68px;
+    padding-top: 10px;
+}
+
+#ide_header {
+    padding: 0 10px;
+}
+
+.CodeMirror-vscrollbar {
+    overflow-y: hidden!important;
+}

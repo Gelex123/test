@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://devionity.com/ru/courses/php-oop/php-abstract-classes -->
+<html lang="en" class=""><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity</title>
+    <!-- Meta -->
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Лекция Абстрактные классы и методы из курса Изучаем PHP онлайн. Часть II. ООП. Школа онлайн программирования Devionity. Преподаватели онлайн 24/7. Регистрируйтесь!">
+    <meta name="author" content="Devionity">
+    <link rel="shortcut icon" href="https://devionity.com/img/favicon.png">
+    <link href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/css" rel="stylesheet" type="text/css">
+    <link href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/css(1)" rel="stylesheet" type="text/css">
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/bootstrap.min.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/font-awesome.css">
+    <link rel="stylesheet" href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/flexslider.css">
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/styles.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script type="text/javascript" async="" src="https://mc.yandex.ru/metrika/watch.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/embed.js"></script><style type="text/css">.fancybox-margin{margin-right:16px;}</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_close_icon:active{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_loader{background-color:#f6f7f9;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f9;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style><script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/alfie.f51946af45e0b561c60f768335c9eb79.js" async="" charset="UTF-8"></script></head>
+
+<body class="about-page  pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+  <div class="pace-progress-inner"></div>
+</div>
+<div class="pace-activity"></div></div>
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/xd_arbiter.html" style="border: none;"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div>
+<script id="facebook-jssdk" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/sdk.js"></script><script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.3&appId=861077040619338";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+<div style="background:url(&#39;/pabnr.PNG&#39;);height:60px; background-repeat: no-repeat;     background-position: center; width:100%; cursor:pointer;position: absolute;   top: 0;   left: 0;   z-index: 100000;" onclick="window.location=&#39;http://php-academy.kiev.ua&#39;; ga(&#39;send&#39;, &#39;event&#39;, &#39;Banners&#39;, &#39;PHP Academy&#39;, &#39;PA Top Banner Click&#39;);"></div>
+
+	
+<!-- ******HEADER******  navbar-fixed-top -->
+<header id="header" class="header" style="padding-bottom:95px;">
+    <div class="container">
+	<br>
+	<br>
+	<br>
+        <div class="logo">
+            <a href="https://devionity.com/ru"><span class="logo-icon"></span><span class="text">Devionity</span></a>
+        </div><!--//logo-->
+        <nav class="main-nav navbar-right" role="navigation">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button><!--//nav-toggle-->
+            </div><!--//navbar-header-->
+            <div id="navbar-collapse" class="navbar-collapse collapse">
+                <script>
+    function changeCountry(country, reload){
+
+        if ( country == 'ua' ){ country_name = 'Украина'; }
+        if ( country == 'ru' ){ country_name = 'Россия'; }
+        if ( country == 'by' ){ country_name = 'Беларусь'; }
+        if ( country == 'kz' ){ country_name = 'Казахстан'; }
+        if ( country == 'ge' ){ country_name = 'Грузия'; }
+
+        if ( reload == 1 ) {
+            setCookie('country_code', country, 365);
+            window.location.reload();
+            return ;
+        }
+        $('#main_flag_span').removeClass('flag-icon-ua').removeClass('flag-icon-ru').removeClass('flag-icon-by').removeClass('flag-icon-kz').removeClass('flag-icon-ge');
+        $('#main_flag_span').addClass('flag-icon-'+country);
+        $('#main_country_name_span').html(country_name);
+
+    }
+</script>
+
+<link href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/flag-icon.css" rel="stylesheet">
+<ul class="nav navbar-nav">
+
+    <li class=" nav-item"><a onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Home Page&#39;, &#39;Top Menu&#39;, &#39;Home Link&#39;);" href="https://devionity.com/ru">Главная</a></li>
+<!--    <li class="--><!--active--><!-- nav-item"><a href="/--><!--?//=LANG?--><!--/product">--><!--?//=___('Product', 'О продукте')?--><!--</a></li>-->
+
+    <li class="active nav-item"><a onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Home Page&#39;, &#39;Top Menu&#39;, &#39;Courses Link&#39;);" href="https://devionity.com/ru/courses">Онлайн Курсы</a></li>
+    <li class=" nav-item"><a onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Home Page&#39;, &#39;Top Menu&#39;, &#39;Online IDE Link&#39;);" href="https://devionity.com/ru/projects">Онлайн IDE</a></li>
+
+    
+            <li class="nav-item"><a onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Home Page&#39;, &#39;Top Menu&#39;, &#39;Login Link&#39;);" href="https://devionity.com/ru/users/login">Войти</a></li>
+        <li class="nav-item nav-item-cta last"><a onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Home Page&#39;, &#39;Top Menu&#39;, &#39;Create Account Button&#39;);" class="btn btn-cta btn-cta-secondary" href="https://devionity.com/ru/users/register">Создать Аккаунт</a></li>
+    </ul><!--//nav-->
+            </div><!--//navabr-collapse-->
+        </nav><!--//main-nav-->
+    </div><!--//container-->
+</header><!--//header-->
+
+<div class="headline-bg about-headline-bg">
+</div><!--//headline-bg-->
+
+<!-- ******Video Section****** -->
+<section class="story-section section section-on-bg">
+        <h1 class="title container text-center">Абстрактные классы и методы</h1>
+    	
+	<br>
+	<center>
+	
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Devionity - Top -->
+<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-4876113049065030" data-ad-slot="8766176504"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+	
+	</center>
+	<br>
+	
+    <div class="story-container container text-center">
+        <div class="story-container-inner">
+            <div class="about" style="padding: 0px !important;">
+                <style>
+    .headline-bg.about-headline-bg{
+        background-color: #2c3e50 !important;
+        background-image: none !important;
+    }
+    .story-section .story-container-inner{
+        max-width: 100% !important;
+    }
+</style>
+<link href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/codemirror.css" rel="stylesheet">
+<link href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/ambiance.css" rel="stylesheet">
+
+<!-- CodeMirror -->
+<script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/codemirror.js"></script>
+<script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/javascript.js"></script>
+<script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/xml.js"></script>
+<script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/htmlmixed.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/inspinia.js"></script>
+<script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/pace.min.js"></script>
+
+<link rel="stylesheet" href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/show-hint.css">
+
+<script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/show-hint.js"></script>
+<script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/xml-hint.js"></script>
+<script src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/html-hint.js"></script>
+
+<style type="text/css">
+    .CodeMirror {
+        border: 1px solid #ddd;
+        height: auto;
+    }
+</style>
+
+
+<link href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/prism.css" rel="stylesheet" type="text/css">
+
+
+
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/prism.js"></script>
+
+
+    <div>
+
+
+
+        <div class="lecture-content" style=" float: left;">
+
+
+                <ul class="breadcrumb" style="margin-bottom: 30px;">
+                                    <li class="active">
+                    <a href="https://devionity.com/">Главная</a>
+                </li>
+                                                <li class="active">
+                    <a href="https://devionity.com/ru/courses">Курсы</a>
+                </li>
+                                                <li class="active">
+                    <a href="https://devionity.com/ru/courses/php-oop">Изучаем PHP онлайн. Часть II. ООП</a>
+                </li>
+                                                <li class="active">
+                    <strong>Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity</strong>
+                </li>
+                            <div class="fb-like fb_iframe_widget" style="float: right;" data-href="/ru/courses/php-oop/php-abstract-classes" data-width="700" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=861077040619338&amp;container_width=0&amp;href=https%3A%2F%2Fdevionity.com%2Fru%2Fcourses%2Fphp-oop%2Fphp-abstract-classes&amp;layout=button_count&amp;locale=ru_RU&amp;sdk=joey&amp;share=true&amp;show_faces=false&amp;width=700"><span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;"><iframe name="f34065311988338" width="700px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/like.html" style="border: none; visibility: visible; width: 0px; height: 0px; display: none !important;"></iframe></span></div>
+    </ul>
+
+
+
+
+
+            
+            <em><strong>Абстрактный класс - </strong></em> это класс, для которого не могут быть созданы его экземпляры. Для того, чтоб определить класс, как абстрактный, необходимо записать ключевое слово <code>abstract</code> перед словом <code>class</code>:<br>
+<br>
+<pre class="line-numbers language-php" data-language="php"><code class=" language-php"><span class="token keyword keyword-abstract">abstract</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span> 
+  <span class="token comment" spellcheck="true"> // properties &amp; methods 
+</span><span class="token punctuation">}</span><span class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>
+<br>
+Тогда любая попытка создать экземпляр этого класса (при помощи оператора <code>new</code>) будет означать <em><strong> fatal error</strong> </em>и работа скрипта будет остановлена.<br>
+<br>
+<em><strong>Для чего это нужно?</strong> </em>Это дает программистам более качественно моделировать те или иные сущности. Например, у нас есть геометрическая фигура и класс <code>Figure</code>. Поскольку, мы еще не знаем, какая именно фигура, то мы не можем ее себе представить или нарисовать. Это значит что создавать экземпляр этого класса не имеет смысла и мы можем определить соответствующий класс как абстрактный, а классы <code>Triangle</code>, <code>Square</code>, <code>CIrcle</code> как дочерние классы геометрической фигуры.<br>
+<br>
+В абстрактном классе допускается объявление методов <em><strong>без</strong> <strong>тела</strong> </em>самих методов. Такие методы называются <em><strong>абстрактными</strong> </em>или <em><strong>виртуальными</strong></em>. Это означает, что этот метод <em><strong>обязательно</strong> </em>должен быть <em><strong>реализован</strong> </em>в <em><strong>дочернем</strong> </em>классе. Иначе это приведет к ошибке. Для того, чтобы определить метод, как абстрактный, также необходимо указать ключевое слово <code>abstract</code> перед определением метода:<br>
+<br>
+<div style="cursor: pointer; width: 140px; margin-bottom: 5px; font-size:0.8em;" onclick="goFS(&#39;frame&#39;);"><button>→ На полный экран</button></div>
+<iframe id="frame" style="width: 100%; height: 700px; border: none;" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/saved_resource.html"></iframe>
+        </div>
+        <br>
+        <br>
+    </div>
+
+<div class="text-center" style=" padding-top: 20px; margin-bottom: 0px;">
+
+
+
+
+</div>
+<br>
+<center style="margin-top:20px;"><br><br>
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Devionity - Bottom -->
+<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px;margin-top:20px;" data-ad-client="ca-pub-4876113049065030" data-ad-slot="1103308906"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center>
+
+
+<div class="text-center" style="width: 100%; float: left; clear: both; margin-top: 20px; margin-bottom: 20px;">
+   <div class=" text-center well" style="height: 75px;">
+              <div style="float: right;">
+           <a onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Lecture&#39;, &#39;Buttons&#39;, &#39;Next Button Click&#39;);" href="https://devionity.com/ru/courses/php-oop/php-final-classes-methods"><button type="button" class="btn btn-bg btn-success">Финальные классы и методы <i class="fa fa-arrow-right"></i></button></a>
+       </div>
+                  <div style="float: left;">
+           <a onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Lecture&#39;, &#39;Buttons&#39;, &#39;Previous Button Click&#39;);" href="https://devionity.com/ru/courses/php-oop/php-iterating-object"><button type="button" class="btn btn-bg btn-primary"><i class="fa fa-arrow-left"></i>Итерирование объекта</button></a>
+       </div>
+           </div>
+</div>
+
+<script>
+    $('.tab-pane').removeClass('active');
+    $('.tab-pane.first').addClass('active');
+</script>
+
+<div id="disqus_thread" style="margin-top: 40px;"><iframe id="dsq-app2" name="dsq-app2" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/saved_resource(1).html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 565px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'devionity';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript" rel="nofollow"&gt;comments powered by Disqus.&lt;/a&gt;</noscript>
+            </div><!--//about-->
+
+        </div><!--//story-container-->
+    </div><!--//container-->
+</section><!--//story-video-->
+
+<!-- ******FOOTER****** -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col links col-md-2 col-sm-4 col-xs-12">
+                    <div class="footer-col-inner">
+                        <h3 class="title">О нас</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="https://devionity.com/"><i class="fa fa-caret-right"></i>Главная</a></li>
+<!--                            <li><a href="/--><!--?//=LANG?--><!--/pages/view/about"><i class="fa fa-caret-right"></i>--><!--?//=___('Who we are', 'О компании')?--><!--</a></li>-->
+<!--                            <li><a href="#"><i class="fa fa-caret-right"></i>--><!--?//=___('Jobs', 'Вакансии')?--><!--</a></li>-->
+                            <li><a href="https://devionity.com/ru/contacts"><i class="fa fa-caret-right"></i>Контакты</a></li>
+                            <li><a target="_blank" href="http://php-academy.kiev.ua/"><i class="fa fa-caret-right"></i>Курсы PHP в Киеве</a></li>
+                        </ul>
+<br>
+                        <h3 class="title">Продукт</h3>
+                        <ul class="list-unstyled">
+                            <!--                            <li><a href="#"><i class="fa fa-caret-right"></i>--><!--?//=___('About Product', 'О продукте')?--><!--</a></li>-->
+                            <li><a href="https://devionity.com/ru/courses"><i class="fa fa-caret-right"></i>Курсы</a></li>
+                            <li><a href="https://devionity.com/ru/projects"><i class="fa fa-caret-right"></i>Онлайн IDE</a></li>
+                            <li><a href="https://devionity.com/ru/pricing"><i class="fa fa-caret-right"></i>Стоимость</a></li>
+                                                    </ul>
+
+
+
+
+                    </div><!--//footer-col-inner-->
+                </div><!--//foooter-col-->
+
+                <div class="footer-col links col-md-3 col-sm-4 col-xs-12 sm-break">
+                    <div class="footer-col-inner">
+                        <h3 class="title">Онлайн курсы</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="https://devionity.com/ru/courses/html-fundamentals"><i class="fa fa-caret-right"></i>Основы HTML</a></li>
+                            <li><a href="https://devionity.com/ru/courses/css-fundamentals"><i class="fa fa-caret-right"></i>Основы CSS</a></li>
+                            <li><a href="https://devionity.com/ru/courses/js-fundamentals-and-jquery"><i class="fa fa-caret-right"></i>Основы Javascript и jQuery</a></li>
+                            <li><a href="https://devionity.com/ru/courses/php-fundamentals"><i class="fa fa-caret-right"></i>PHP. Часть I - Основы</a></li>
+                            <li><a href="https://devionity.com/ru/courses/php-oop"><i class="fa fa-caret-right"></i>PHP. Часть II - ООП</a></li>
+                            <li><a href="https://devionity.com/ru/courses/dive-into-ajax"><i class="fa fa-caret-right"></i>Изучаем AJAX</a></li>
+                            <li><a href="https://devionity.com/ru/courses/creating-mvc-framework"><i class="fa fa-caret-right"></i>Создаем MVC фреймворк с нуля</a></li>
+                            <li><a href="https://devionity.com/ru/courses/mysql-fundamentals"><i class="fa fa-caret-right"></i>Основы MySQL</a></li>
+
+<!--                            <li><a href="/--><!--?//=LANG?--><!--/pages/view/privacy"><i class="fa fa-caret-right"></i>--><!--?//=___('Privacy', 'Конфиденциальность')?--><!--</a></li>-->
+<!--                            <li><a href="/--><!--?//=LANG?--><!--/pages/view/terms"><i class="fa fa-caret-right"></i>--><!--?//=___('Terms of services', 'Условия использования')?--><!--</a></li>-->
+
+                        </ul>
+                    </div><!--//footer-col-inner-->
+                </div><!--//foooter-col-->
+
+
+
+
+
+                <div class="footer-col connect col-md-5 col-sm-12 col-xs-12">
+                    <div class="footer-col-inner">
+                        <ul class="social list-inline">
+                            <li><a target="_blank" href="https://twitter.com/devionity"><i class="fa fa-twitter"></i></a></li>
+                            <li><a target="_blank" href="https://www.facebook.com/pages/Devionity-Ukraine/409194442603445"><i class="fa fa-facebook"></i></a></li>
+                            <li><a target="_blank" href="https://plus.google.com/100344063582043710864"><i class="fa fa-google-plus"></i></a></li>
+<!--                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+<!--                            <li class="row-end"><a href="#"><i class="fa fa-rss"></i></a></li>-->
+                        </ul>
+                        <div class="form-container">
+                            <p class="intro">Будьте в курсе новых предложений от Devionity</p>
+                            <div class="signup-form navbar-form">
+                                <div class="form-group" id="subscribe_email_div">
+                                    <input id="subscribe_email" type="text" class="form-control" placeholder="Ваш email адрес">
+                                </div>
+                                <div class="form-group" id="subscribe_email_div2" style="display: none;">
+                                    Спасибо!                                </div>
+                                <button id="subscribe_btn" onclick="subscribe($(&#39;#subscribe_email&#39;).val()); $(this).toggle(); $(&#39;#subscribe_email_div&#39;).toggle(); $(&#39;#subscribe_email_div2&#39;).toggle();" class="btn btn-cta btn-cta-primary">Подписаться</button>
+                            </div>
+                        </div><!--//subscription-form-->
+                    </div><!--//footer-col-inner-->
+                </div><!--//foooter-col-->
+                <div class="clearfix"></div>
+            </div><!--//row-->
+        </div><!--//container-->
+    </div><!--//footer-content-->
+    <div class="bottom-bar">
+        <div class="container">
+            <small class="copyright">Все права на материалы данного сайта принадлежат<br>ФЛП Шумар О. И., Киев, ул. М. Коцюбинского, 14.
+						</small>
+        </div><!--//container-->
+    </div><!--//bottom-bar-->
+</footer><!--//footer-->
+
+
+<!-- Video Modal -->
+<div class="modal modal-video" style="display: none;" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 id="videoModalLabel" class="modal-title sr-only">Видео обзор Devionity</h4>
+            </div>
+            <div class="modal-body">
+                <div class="video-container">
+                    <iframe width="1280" height="750" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/_mK4V5Acltc.html" frameborder="0" allowfullscreen=""></iframe>
+                </div><!--//video-container-->
+            </div><!--//modal-body-->
+        </div><!--//modal-content-->
+    </div><!--//modal-dialog-->
+</div><!--//modal-->
+
+<!-- Javascript -->
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/bootstrap.min.js"></script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/bootstrap-hover-dropdown.min.js"></script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/back-to-top.js"></script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/jquery.placeholder.js"></script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/jquery.fitvids.js"></script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/main.js"></script>
+
+<!-- Vimeo video API -->
+<script src="https://a.vimeocdn.com/js/froogaloop2.min.js"></script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/vimeo.js"></script>
+
+
+<script type="text/javascript">
+    function setCookie(key, value, days) {
+        var expires = new Date();
+        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = key + '=' + value + ';path=/;expires=' + expires.toUTCString();
+    }
+
+    function getCookie(key) {
+        var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+        return keyValue ? keyValue[2] : null;
+    }
+
+    function subscribe(email){
+        $.get('//devionity.com/api?subscribe='+email);
+    }
+
+    $("#subscribe_email").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#subscribe_btn").click();
+        }
+    });
+</script>
+
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/jquery.min.js"></script>
+<link rel="stylesheet" href="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/jquery.fancybox.css" type="text/css" media="screen">
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/jquery.fancybox.pack.js"></script>
+<!-- <a href="/ru/contacts" target="_blank"><div id="devionity_chat" class="text-center"><i class="fa fa-comments-o"></i>Чат с преподавателем</div></a> -->
+<!-- onclick="javascript:parent.jQuery.fancybox.open({href : '/ru/chat', title : null,  type: 'iframe', height: '70%', autoSize : false});" -->
+
+<script>
+    cc = getCookie('country_code');
+    if ( cc == 'ua' || cc == 'ru' || cc == 'by' || cc == 'kz' || cc == 'ge' ){
+        changeCountry(cc, 0);
+    } else {
+        changeCountry('ua', 0);
+    }
+</script>
+
+<style>
+    #devionity_chat{
+        position: fixed;
+        z-index: 1000;
+        bottom: 0;
+        right: 5%;
+        width: 50px;
+        background: #e74c3c;
+        font-size: 16px;
+        padding:10px;
+        width: auto;
+        text-transform: uppercase;
+        cursor: pointer;
+        color: #fff;
+        text-wrap: none;
+
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -ms-border-radius: 4px;
+        -o-border-radius: 4px;
+        border-radius: 4px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        -moz-background-clip: padding;
+    }
+    .fancybox-inner{
+        overflow: hidden !important;
+    }
+</style>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-64408706-1');	
+    //ga('create', 'UA-64408706-1', 'auto');
+    ga('send', 'pageview');
+
+    function goFS(id){
+
+        var i = document.getElementById(id);
+
+        // go full-screen
+        if (i.requestFullscreen) {
+            i.requestFullscreen();
+        } else if (i.webkitRequestFullscreen) {
+            i.webkitRequestFullscreen();
+        } else if (i.mozRequestFullScreen) {
+            i.mozRequestFullScreen();
+        } else if (i.msRequestFullscreen) {
+            i.msRequestFullscreen();
+        }
+    }
+
+</script>
+
+<!-- Код тега ремаркетинга Google -->
+<!--------------------------------------------------
+С помощью тега ремаркетинга запрещается собирать информацию, по которой можно идентифицировать личность пользователя. Также запрещается размещать тег на страницах с контентом деликатного характера. Подробнее об этих требованиях и о настройке тега читайте на странице http://google.com/ads/remarketingsetup.
+--------------------------------------------------->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 976752655;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/conversion.js">
+</script><iframe name="google_conversion_frame" title="Google conversion frame" width="300" height="13" src="./Абстрактные классы и методы - Курс Изучаем PHP онлайн. Часть II. ООП от Devionity_files/saved_resource(2).html" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no"></iframe>
+<noscript>
+&lt;div style="display:inline;"&gt;
+&lt;img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/976752655/?value=0&amp;amp;guid=ON&amp;amp;script=0"/&gt;
+&lt;/div&gt;
+</noscript>
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter31045316 = new Ya.Metrika({
+                    id:31045316,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript>&lt;div&gt;&lt;img src="https://mc.yandex.ru/watch/31045316" style="position:absolute; left:-9999px;" alt="" /&gt;&lt;/div&gt;</noscript>
+<!-- /Yandex.Metrika counter -->
+<!-- 
+<script type="text/javascript">
+    var __lc = {};
+    __lc.license = 6233231;
+
+    (function() {
+        var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+        lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+    })();
+</script> -->
+
+
+
+
+
+ <div id="topcontrol" title="Scroll Back to Top" style="position: fixed; bottom: 5px; right: 5px; opacity: 0; cursor: pointer;"><i class="fa fa-angle-up"></i></div></body></html>
